@@ -16,16 +16,16 @@ import java.util.List;
 
 public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHolder> {
 
-    private List<Device> items;
+    private List<Device> items = new ArrayList<>();
 
-
-    public RetrofitAdapter() {
-
+    public void addItem(Device device) {
+        items.add(device);
     }
 
-    public RetrofitAdapter(List<Device> items) {
-        this.items = items;
-    }
+
+//    public RetrofitAdapter(List<Device> items) {
+//        this.items = items;
+//    }
 
 
     @NonNull
@@ -38,12 +38,14 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Device item = items.get(position);
-        holder.textView.setText(item.getDeviceName());
-        holder.textView2.setText(item.getDeviceDesc());
-        Picasso.get()
-                .load(item.getImageUrl())
-                .into(holder.imageView);
+//        Device item = items.get(position);
+//        holder.textView.setText(item.getDeviceName());
+//        holder.textView2.setText(item.getDeviceDesc());
+//        Picasso.get()
+//                .load(item.getImageUrl())
+//                .into(holder.imageView);
+        Device device = items.get(position);
+        holder.setItem(device);
 
     }
 
@@ -70,11 +72,14 @@ public class RetrofitAdapter extends RecyclerView.Adapter<RetrofitAdapter.ViewHo
             imageView = itemView.findViewById(R.id.imageView);
         }
 
-//        public void setItem(Device item) {
-//            textView.setText(item.getDeviceName());
-//            textView2.setText(item.getDeviceDesc());
-//            // imageView.setText(item.getOpenDt());
-//        }
+        public void setItem(Device device) {
+            textView.setText(device.getDeviceName());
+            textView2.setText(device.getDeviceDesc());
+                Picasso.get()
+                .load(device.getImageUrl())
+                .into(imageView);
+            // imageView.setText(item.getOpenDt());
+        }
     }
 
 }

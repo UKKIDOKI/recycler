@@ -3,6 +3,8 @@ package com.doit.tete;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Device {
 
     @SerializedName("id")
@@ -23,6 +25,13 @@ public class Device {
     @SerializedName("deviceDesc")
     @Expose
     private String deviceDesc;
+
+    public Device(List<Device> devices) {
+
+    }
+
+    public Device(String toString) {
+    }
 
     public Integer getId() {
         return id;

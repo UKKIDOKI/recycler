@@ -18,14 +18,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RetrofitAdapter mAdapter,mAdapter2,mAdapter3,mAdapter1;
-    private List<Device> items;
+   // private RetrofitAdapter mAdapter,mAdapter2,mAdapter3,mAdapter1;
+  //  private List<Device> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RetrofitAdapter adapter = new RetrofitAdapter();
+        RetrofitAdapter madapter = new RetrofitAdapter();
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         Api api = retrofit.create(Api.class);
         api.getData().enqueue(new Callback<List<Data>>() {
             @Override
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                         List<Data> data = response.body();
 
+//                        adapter.addItem(new ArrayList<Device>(data.get(0).getDevices()));
+
+
+                        adapter.addItem(new Device(data.get(0).getDevices()));
+                        adapter.addItem(new Device(data.get(1).getDevices()));
+                        adapter.addItem(new Device(data.get(2).getDevices()));
+                        adapter.addItem(new Device(data.get(3).getDevices()));
 
                         //   data.add((Data) new Data().getDevices());
 
@@ -50,23 +60,32 @@ public class MainActivity extends AppCompatActivity {
                         //  data.add(data.get(3));
 
                         Log.d("TEST", "성공성공");
+                        Log.d("TEST", adapter.toString());
+                        Log.d("TEST", String.valueOf(data.get(0).getDevices()));
+                        Log.d("TEST", String.valueOf(data.get(1).getDevices()));
+                        Log.d("TEST", String.valueOf(data.get(2).getDevices()));
+                        Log.d("TEST", String.valueOf(data.get(3).getDevices()));
+                    //    Log.d("TEST", String.valueOf(adapter.));
 
+                             recyclerView.setAdapter(adapter);
 
-
-                       // mAdapter = new RetrofitAdapter(data.get(0).getDevices());
-                        mAdapter = new RetrofitAdapter(data.get(1).getDevices());
-                        mAdapter2 = new RetrofitAdapter(data.get(2).getDevices());
-                        mAdapter3 = new RetrofitAdapter(data.get(3).getDevices());
+//                        mAdapter = new RetrofitAdapter(data.get(1).getDevices());
+//                        mAdapter2 = new RetrofitAdapter(data.get(2).getDevices());
+//                        mAdapter3 = new RetrofitAdapter(data.get(3).getDevices());
                         //   mAdapter = new RetrofitAdapter(data.get(2).getDevices());
 
                        // Object[] mAdapters = {mAdapter,mAdapter1,mAdapter2,mAdapter3};
                         //    mAdapter = new RetrofitAdapter(data.get(1).getDevices());
 //                    mAdapter = new RetrofitAdapter(data.get(2).getDevices());
 //                    mAdapter = new RetrofitAdapter(data.get(3).getDevices());
-                        recyclerView.setAdapter(mAdapter);
+
 
 
                 }
+
+
+
+
             }
 
             @Override
@@ -76,4 +95,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
